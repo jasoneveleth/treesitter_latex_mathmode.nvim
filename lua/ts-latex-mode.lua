@@ -1,19 +1,20 @@
--- (function()
-
--- think of this file as a function that calls itself, and stores the name in a
--- global map (caching the `require("file.lua")`)
-
 local has_treesitter, ts = pcall(require, 'vim.treesitter')
 local _, query = pcall(require, 'vim.treesitter.query')
 
 local M = {}
 
 local MATH_ENVIRONMENTS = {
-  displaymath = true,
-  eqnarray = true,
-  equation = true,
-  math = true,
-  array = true,
+    -- math = true,
+    displaymath = true,
+    equation = true,
+    multline = true,
+    eqnarray = true,
+    align = true,
+    array = true,
+    split = true,
+    alignat = true,
+    gather = true,
+    flalign = true
 }
 local MATH_NODES = {
   displayed_equation = true,
@@ -70,5 +71,3 @@ function M.in_mathzone()
 end
 
 return M
-
--- )()
