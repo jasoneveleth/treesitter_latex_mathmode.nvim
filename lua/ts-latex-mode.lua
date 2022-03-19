@@ -64,11 +64,11 @@ function M.in_mathzone()
     if MATH_NODES[node:type()] ~= nil then
       return MATH_NODES[node:type()]
     end
-    if node:type() == 'environment' then
+    if node:type() == 'generic_environment' then
       local begin = node:child(0)
       local names = begin and begin:field 'name'
 
-      if names and names[1] and MATH_ENVIRONMENTS[query.get_node_text(names[1], buf):gsub('[%s*]', '')] then
+      if names and names[1] and MATH_ENVIRONMENTS[query.get_node_text(names[1], buf):match '{([a-zA-Z%d]*)}'] then
         return true
       end
     end
