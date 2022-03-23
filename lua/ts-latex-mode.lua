@@ -10,11 +10,16 @@ local MATH_ENVIRONMENTS = {
   multline = true,
   eqnarray = true,
   align = true,
+  [ [[align*]] ] = true,
   array = true,
   split = true,
   alignat = true,
   gather = true,
   flalign = true,
+  [ [[flalign*]] ] = true,
+  -- NOTE: This is not necessary as the aligned environment can be placed only in a math zone, but
+  -- it can possibly speed-up the tree climbing <kunzaatko>
+  aligned = true,
 }
 local MATH_NODES = {
   displayed_equation = true,
@@ -68,8 +73,11 @@ function M.in_mathzone()
       local begin = node:child(0)
       local names = begin and begin:field 'name'
 
-      if names and names[1] and MATH_ENVIRONMENTS[query.get_node_text(names[1], buf):match '{([a-zA-Z%d]*)}'] then
-        return true
+      if names and names[1] then
+        local env_name = query.get_node_text(names[1], buf):match '{([a-zA-Z%d%*]*)}'
+        if MATH_ENVIRONMENTS[env_name] ~= nil then
+          return MATH_ENVIRONMENTS[env_name]
+        end
       end
     end
     node = node:parent()
