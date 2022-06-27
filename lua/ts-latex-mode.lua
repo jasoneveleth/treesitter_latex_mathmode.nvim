@@ -22,6 +22,7 @@ local MATH_ENVIRONMENTS = {
   aligned = true,
 }
 local MATH_NODES = {
+  math_environment = true,
   displayed_equation = true,
   inline_formula = true,
   text_mode = false,
